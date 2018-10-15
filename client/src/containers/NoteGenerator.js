@@ -12,7 +12,7 @@ import Gs4 from '../assets/sounds/Gs4.wav'
 import A4 from '../assets/sounds/A4.wav'
 import As4 from '../assets/sounds/As4.wav'
 import B4 from '../assets/sounds/B4.wav'
-import C5 from '../assets/sounds/C5.wav'
+// import C5 from '../assets/sounds/C5.wav'
 
 let soundDict = {};
 
@@ -28,14 +28,14 @@ soundDict[8] = Gs4;
 soundDict[9] = A4;
 soundDict[10] = As4;
 soundDict[11] = B4;
-soundDict[12] = C5;
+// soundDict[12] = C5;
 
 class NoteGenerator extends Component {
 
     handleClick = () => {
-        let randomSoundNum = Math.floor(Math.random() * 12);
+        let randomSoundNum = Math.floor(Math.random() * 11);
         console.log(randomSoundNum);
-        this.props.getNewNote(randomSoundNum);
+        this.props.setCurrNote(randomSoundNum);
         const audio = new Audio(soundDict[randomSoundNum]);
         audio.play();
     }
