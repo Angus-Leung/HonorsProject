@@ -1,13 +1,18 @@
 import React, { Component } from 'react'
 import './App.css'
+
+import middleC from '../assets/sounds/middleC.wav'
+
 class App extends Component {
-  constructor () {
-    super()
-    this.handleClick = this.handleClick.bind(this)
+  state = {
+    currentNote: 'middleC' // need to use this to dynamically play a note
+  };
+
+  handleClick = () => {
+    const audio = new Audio(middleC);
+    audio.play();
   }
-  handleClick () {
-    console.log('Success!')
-  }
+
   render () {
     return (
       <div className='button__container'>
