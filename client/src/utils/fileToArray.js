@@ -10,5 +10,6 @@ import Gs4 from '../assets/sounds/Gs4.wav';
 import A4 from '../assets/sounds/A4.wav';
 import As4 from '../assets/sounds/As4.wav';
 import B4 from '../assets/sounds/B4.wav';
+import C5 from '../assets/sounds/C5.wav';
 
-export default [C4, Cs4, D4, Ds4, E4, F4, Fs4, G4, Gs4, A4, As4, B4];
+export default [C4, Cs4, D4, Ds4, E4, F4, Fs4, G4, Gs4, A4, As4, B4, C5];
