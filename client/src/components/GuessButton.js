@@ -1,4 +1,5 @@
 import React from 'react';
+import { Button } from 'antd';
 
 export default ({getCurrNote, noteValue, guessNote}) => {
 
@@ -12,9 +13,9 @@ export default ({getCurrNote, noteValue, guessNote}) => {
 
     return (
         <div className='button2__container'>
-            <button className='button' onClick={handleClick}>
+            <Button size="large" block onClick={handleClick}>
                 {guessNote}
-            </button>
+            </Button>
         </div>
     );
 };
