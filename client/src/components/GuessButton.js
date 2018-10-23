@@ -1,5 +1,6 @@
 import React from 'react';
 import { Button } from 'antd';
+import "./GuessButton.css"
 
 export default ({getCurrNote, noteValue, guessNote}) => {
 
@@ -12,8 +13,12 @@ export default ({getCurrNote, noteValue, guessNote}) => {
     }
 
     return (
-        <div className='button2__container'>
-            <Button size="large" block onClick={handleClick}>
+        <div className='button-container'>
+            <Button
+                block
+                size="large"
+                onClick={handleClick}
+            >
                 {guessNote}
             </Button>
         </div>

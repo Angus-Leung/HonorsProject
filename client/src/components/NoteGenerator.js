@@ -1,5 +1,6 @@
 import React from 'react';
 import soundsArray from '../utils/fileToArray';
+import { Button } from 'antd';
 
 export default ({setCurrNote, numNotesToPlay, currentKey, minRange, maxRange}) => {
 
@@ -30,10 +31,13 @@ export default ({setCurrNote, numNotesToPlay, currentKey, minRange, maxRange}) =
     }
     
     return (
-        <div className='button__container'>
-            <button className='button' onClick = {handleClick}>
-                Click Me
-            </button>
+        <div style={{width: "25%"}}>
+            <Button
+                block
+                onClick = {handleClick}
+            >
+                Generate Note
+            </Button>
         </div>
     );
 };

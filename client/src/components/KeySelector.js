@@ -2,31 +2,14 @@ import React from 'react';
 import { Menu, Dropdown, Icon } from 'antd';
 
 
-export default ( {updateCurrKey} ) => {
-
+export default ( {updateCurrKey, keys} ) => {
     const menu = () => (
         <Menu>
-            <Menu.Item onClick={() => updateCurrKey(0)}>
-                <a>C</a>
-            </Menu.Item>
-            <Menu.Item onClick={() => updateCurrKey(2)}>
-                <a>D</a>
-            </Menu.Item>
-            <Menu.Item onClick={() => updateCurrKey(4)}>
-                <a>E</a>    
-            </Menu.Item>
-            <Menu.Item onClick={() => updateCurrKey(5)}>
-                <a>F</a>    
-            </Menu.Item>
-            <Menu.Item onClick={() => updateCurrKey(7)}>
-                <a>G</a>    
-            </Menu.Item>
-            <Menu.Item onClick={() => updateCurrKey(9)}>
-                <a>A</a>    
-            </Menu.Item>
-            <Menu.Item onClick={() => updateCurrKey(11)}>
-                <a>B</a>    
-            </Menu.Item>
+            {keys.map((key, index) => (
+                <Menu.Item onClick={() => updateCurrKey(index)}>
+                    <a>{key}</a>
+                </Menu.Item>
+            ))}
         </Menu>
     );
 

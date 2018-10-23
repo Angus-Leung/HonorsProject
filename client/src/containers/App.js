@@ -46,31 +46,35 @@ class App extends Component {
     const { currentNote, numNotesToPlay, currentKey, minRange, maxRange } = this.state;
 
     return (
-      <>
+      <div style={{height: "100%", width: "100%", display: 'flex', alignItems: 'center', flexDirection: "column"}}>
         <NoteGenerator 
-        setCurrNote={this.setCurrNote}
-        numNotesToPlay={numNotesToPlay} 
-        currentKey={currentKey}
-        minRange= {minRange}
-        maxRange = {maxRange}
+          setCurrNote={this.setCurrNote}
+          numNotesToPlay={numNotesToPlay} 
+          currentKey={currentKey}
+          minRange= {minRange}
+          maxRange = {maxRange}
         />
-        {arrayOfNotes.map((note, i) => (
-          <GuessButton 
-            key={note}
-            guessNote={note} 
-            getCurrNote={currentNote} 
-            noteValue={i} 
-          />
-        ))}
+        <div className="guess-button-container">
+          {arrayOfNotes.map((note, i) => (
+            <GuessButton 
+              key={note}
+              guessNote={note} 
+              getCurrNote={currentNote} 
+              noteValue={i} 
+            />
+          ))}
+        </div>
         <NumNotesSlider 
-            value={numNotesToPlay}
-            updateNumNotes={this.updateNumNotes}
+          value={numNotesToPlay}
+          updateNumNotes={this.updateNumNotes}
         />
-        <KeySelector updateCurrKey={this.updateCurrKey} />
+        <KeySelector
+          updateCurrKey={this.updateCurrKey}
+          keys={["C", "D", "E", "F", "G", "A", "B"]}
+        />
         <RangeSlider updateRange={this.updateRange} />
-      </>
+      </div>
     )
   }
-  
 }
 export default App;

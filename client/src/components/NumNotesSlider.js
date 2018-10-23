@@ -6,7 +6,7 @@ class NumNotesSlider extends Component {
     render() {
         const {updateNumNotes, value} = this.props
         return (
-            <div className='button3__container'>
+            <div className='slider-container'>
                 <Col span={12}>
                     <Slider
                         min={1}
