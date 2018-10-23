@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import './App.css'
-import GuessButton from './GuessButton';
-import NoteGenerator from './NoteGenerator';
-import NumNotesSlider from './NumNotesSlider'
-import KeySelector from './KeySelector';
-import RangeSlider from './RangeSlider'
+import GuessButton from '../components/GuessButton';
+import NoteGenerator from '../components/NoteGenerator';
+import NumNotesSlider from '../components/NumNotesSlider'
+import KeySelector from '../components/KeySelector';
+import RangeSlider from '../components/RangeSlider'
  
 const arrayOfNotes = [
   "C", "C#", "D", "D#", "E", "F", "F#", "G#", "A", "A#", "B"
