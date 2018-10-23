@@ -6,7 +6,10 @@ export default ( {updateCurrKey, keys} ) => {
     const menu = () => (
         <Menu>
             {keys.map((key, index) => (
-                <Menu.Item onClick={() => updateCurrKey(index)}>
+                <Menu.Item
+                    key={key}
+                    onClick={() => updateCurrKey(index)}
+                >
                     <a>{key}</a>
                 </Menu.Item>
             ))}
