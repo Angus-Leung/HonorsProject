@@ -15,6 +15,18 @@ export default ( {updateCurrKey} ) => {
             <Menu.Item onClick={() => updateCurrKey(4)}>
                 <a>E</a>    
             </Menu.Item>
+            <Menu.Item onClick={() => updateCurrKey(5)}>
+                <a>F</a>    
+            </Menu.Item>
+            <Menu.Item onClick={() => updateCurrKey(7)}>
+                <a>G</a>    
+            </Menu.Item>
+            <Menu.Item onClick={() => updateCurrKey(9)}>
+                <a>A</a>    
+            </Menu.Item>
+            <Menu.Item onClick={() => updateCurrKey(11)}>
+                <a>B</a>    
+            </Menu.Item>
         </Menu>
     );
 

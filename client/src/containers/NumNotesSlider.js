@@ -7,10 +7,6 @@ class NumNotesSlider extends Component {
         const {updateNumNotes, value} = this.props
         return (
             <div className='button3__container'>
-                {/* <button className='button' 
-                        onClick={this.props.updateNumNotes}>
-                        {this.props.value}
-                </button> */}
                 <Col span={12}>
                     <Slider
                         min={1}

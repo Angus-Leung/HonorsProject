@@ -4,8 +4,8 @@ import GuessButton from './GuessButton';
 import NoteGenerator from './NoteGenerator';
 import NumNotesSlider from './NumNotesSlider'
 import KeySelector from './KeySelector';
-import { Dropdown, Icon } from 'antd';
-
+import RangeSlider from './RangeSlider'
+ 
 const arrayOfNotes = [
   "C", "C#", "D", "D#", "E", "F", "F#", "G#", "A", "A#", "B"
 ];
@@ -18,7 +18,9 @@ class App extends Component {
     this.state = {
       currentNote: 0, 
       numNotesToPlay: 1,
-      currentKey: 0
+      currentKey: 0,
+      minRange: 3,
+      maxRange: 4
     };
 
   }
@@ -32,11 +34,16 @@ class App extends Component {
   }
 
   updateCurrKey = (num) => {
-    this.setState({ currentKey : num}, () => console.log(this.state.currentKey));
+    this.setState({ currentKey : num}, () => console.log("currKey: " + this.state.currentKey));
+  }
+
+  updateRange = (newRange) => {
+    this.setState({ minRange : newRange[0] }, () => console.log("minRange: " + this.state.minRange));
+    this.setState({ maxRange : newRange[1] }, () => console.log("maxRange: " + this.state.maxRange));
   }
 
   render () {
-    const { currentNote, numNotesToPlay, currentKey } = this.state;
+    const { currentNote, numNotesToPlay, currentKey, minRange, maxRange } = this.state;
 
     return (
       <>
@@ -44,6 +51,8 @@ class App extends Component {
         setCurrNote={this.setCurrNote}
         numNotesToPlay={numNotesToPlay} 
         currentKey={currentKey}
+        minRange= {minRange}
+        maxRange = {maxRange}
         />
         {arrayOfNotes.map((note, i) => (
           <GuessButton 
@@ -58,6 +67,7 @@ class App extends Component {
             updateNumNotes={this.updateNumNotes}
         />
         <KeySelector updateCurrKey={this.updateCurrKey} />
+        <RangeSlider updateRange={this.updateRange} />
       </>
     )
   }
