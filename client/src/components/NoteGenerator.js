@@ -1,6 +1,7 @@
 import React from 'react';
 import soundsArray from '../utils/fileToArray';
 import { Button } from 'antd';
+import "./NoteGenerator.css"
 
 export default ({setCurrNote, numNotesToPlay, currentKey, minRange, maxRange}) => {
 
@@ -31,8 +32,9 @@ export default ({setCurrNote, numNotesToPlay, currentKey, minRange, maxRange}) =
     }
     
     return (
-        <div style={{width: "25%"}}>
+        <div className="note-generator-container">
             <Button
+                className="note-generator-button"
                 block
                 onClick = {handleClick}
             >

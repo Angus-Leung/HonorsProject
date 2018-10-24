@@ -1,0 +1,8 @@
+.key-selector-container {
+  width: 33%;
+  height: 15%;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  text-align: center;
+}

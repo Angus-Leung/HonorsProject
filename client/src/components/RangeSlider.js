@@ -13,9 +13,10 @@ export default ({updateRange}) => {
     };
     
     return (
-        <div>
+        <div style={{width: "80%"}}>
             <Slider 
                 range 
+                tipFormatter={null}
                 min={1} 
                 max={5} 
                 marks={marks}

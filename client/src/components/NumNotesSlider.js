@@ -1,21 +1,23 @@
 import React, { Component } from 'react';
-import { Slider, InputNumber, Col } from 'antd';
+import { Slider, InputNumber } from 'antd';
+import "./NumNotesSlider.css"
 
 class NumNotesSlider extends Component {
 
     render() {
         const {updateNumNotes, value} = this.props
         return (
-            <div className='slider-container'>
-                <Col span={12}>
+            <div className='num-notes-slider-container'>
+                <div className='num-notes-component-slider'>
                     <Slider
+                        className='num-notes-slider'
                         min={1}
                         max={20}
                         onChange={updateNumNotes}
                         value={typeof value === 'number' ? value : 0}
                     />
-                </Col>
-                <Col span={4}>
+                </div>
+                <div className='num-notes-input-container'>
                     <InputNumber
                         min={1}
                         max={20}
@@ -23,7 +25,7 @@ class NumNotesSlider extends Component {
                         value={value}
                         onChange={updateNumNotes}
                     />
-                </Col>
+                </div>
             </div>
 
         );

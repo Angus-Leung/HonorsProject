@@ -1,0 +1,8 @@
+.reference-octave-selector-container {
+  width: 33%;
+  height: 35%;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  text-align: center;
+}

@@ -1,8 +1,8 @@
 import React from 'react';
 import { Menu, Dropdown, Icon } from 'antd';
+import "./KeySelector.css"
 
-
-export default ( {updateCurrKey, keys} ) => {
+export default ( {updateCurrKey, keys, currentKey} ) => {
     const menu = () => (
         <Menu>
             {keys.map((key, index) => (
@@ -17,10 +17,12 @@ export default ( {updateCurrKey, keys} ) => {
     );
 
     return (
-        <Dropdown overlay={menu()}>
-            <a className="ant-dropdown-link">
-            Hover me <Icon type="down" />
-            </a>
-        </Dropdown>
+        <div className="key-selector-container">
+            <Dropdown overlay={menu()}>
+                <a className="key-selector-dropdown">
+                    Current Key: {currentKey} <Icon type="down" />
+                </a>
+            </Dropdown>
+        </div>
     );
 };

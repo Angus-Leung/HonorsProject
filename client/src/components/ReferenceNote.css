@@ -1,0 +1,15 @@
+.reference-note-container {
+  
+  width: 33%;
+  height: 100%;
+  display: flex;
+  justify-content: flex-start;
+  flex-direction: column;
+  text-align: center;
+}
+
+.reference-note-button {
+  
+  width: 80%;
+  height: 70%;
+}

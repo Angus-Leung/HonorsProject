@@ -13,14 +13,11 @@ export default ({getCurrNote, noteValue, guessNote}) => {
     }
 
     return (
-        <div className='button-container'>
-            <Button
-                block
-                size="large"
-                onClick={handleClick}
-            >
-                {guessNote}
-            </Button>
-        </div>
+        <Button
+            className='guess-button'
+            onClick={handleClick}
+        >
+            {guessNote}
+        </Button>
     );
 };
