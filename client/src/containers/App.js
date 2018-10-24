@@ -24,7 +24,7 @@ class App extends Component {
       currentKey: 0,
       minRange: 3,
       maxRange: 4,
-      referenceNoteOctave: 2
+      referenceNoteOctave: 4
     };
 
   }
@@ -35,7 +35,7 @@ class App extends Component {
 
   setReferenceOctave = (num) => {
     //minus 2 in the equation is to align with the correct value for referenceNoteOctave
-    this.setState({ referenceNoteOctave: (num - 2) });
+    this.setState({ referenceNoteOctave: num });
   }
 
   updateNumNotes = (num) => {

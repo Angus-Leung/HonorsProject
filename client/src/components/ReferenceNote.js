@@ -7,7 +7,7 @@ export default ({currentKey, referenceNoteOctave}) => {
 
     let handleClick = () => {
         
-        const octave = 12 * referenceNoteOctave;
+        const octave = 12 * (referenceNoteOctave - 2);
         const audio = new Audio(soundsArray[currentKey + (octave)]);
         audio.play();
     }
