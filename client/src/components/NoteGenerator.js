@@ -3,32 +3,56 @@ import soundsArray from '../utils/fileToArray';
 import { Button } from 'antd';
 import "./NoteGenerator.css"
 
-export default ({setCurrNote, numNotesToPlay, currentKey, minRange, maxRange}) => {
+export default ({
+    arrayOfNotes, 
+    setCurrNote, 
+    numNotesToPlay, 
+    currentKey, 
+    minRange,
+    maxRange, 
+    setNotesPlayed
+}) => {
 
-    let majorScale = [0, 2, 4, 5, 7, 9, 11];
+    let majorScaleBase = [0, 2, 4, 5, 7, 9, 11];
+    let playedNotes = [];
     //ToDo use random note to say add multiple of 8s depending on octave
-    let handleClick = () => {
-        for (let i=0; i < numNotesToPlay; i++) {
-            setTimeout(() => {
-                /*
-                randomInterval: picks random notes within the scale array 
-                        -toDo change hardCode to accomodate different scales with different lengths
-                startingNote: Start note changes depending on what the user picks for range
-                randomNote: 
-                */
-                let lowestNote = (minRange - 1) * 12;
-                let highestNote = (maxRange - 1) * 12;
-                let randomInterval = Math.floor(Math.random() * 7);
-                let startingNote = currentKey + lowestNote;
-                let randomNote = startingNote + majorScale[randomInterval] + 
-                                (Math.floor((Math.random() * (Math.abs(maxRange - minRange))) * 8));
+
+    const delay = (ms) => {
+        return new Promise(resolve => setTimeout(resolve, ms));
+    }
+
+    let handleClick = async () => {
+
+        let lowestNote = (minRange - 1) * 12;
+        let highestNote = (maxRange - 1) * 12;
+        
+        let scaleAdjustedForKey = majorScaleBase.map((x => (x + currentKey) % 12));
+        console.log("AdjustedScale " + scaleAdjustedForKey);
+
+        let playableNotes = [];
+        for (let j=lowestNote; j < highestNote; j++) {
+            if (scaleAdjustedForKey.includes(j % 12)) {
+                playableNotes.push(j);
+            }
+        }
+
+        for (let i=0; i < numNotesToPlay; i++) {       
                 
-                setCurrNote(randomNote % 11);
-                console.log(randomNote);
-                const audio = new Audio(soundsArray[randomNote]);
-                audio.play();
-            }, 1000*i);
+            console.log(playableNotes);
+
+            let randomNote = (Math.floor(Math.random() * playableNotes.length));
+
+            setCurrNote(playableNotes[randomNote] % 12);
+            console.log("note generated: " + playableNotes[randomNote] + " = " +
+                        arrayOfNotes[(playableNotes[randomNote] % 12)]);
+            const audio = new Audio(soundsArray[playableNotes[randomNote]]);
+            playedNotes.push(playableNotes[randomNote]);
+            audio.play();
+            await delay(1000);
         };
+        console.log("notes played: " + playedNotes);
+        setNotesPlayed(playedNotes);
+        
     }
     
     return (

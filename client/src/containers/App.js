@@ -7,10 +7,8 @@ import KeySelector from '../components/KeySelector';
 import RangeSlider from '../components/RangeSlider'
 import ReferenceNote from '../components/ReferenceNote';
 import ReferenceOctaveSelector from '../components/ReferenceOctaveSelector';
- 
-// const arrayOfNotes = [
-//   "C", "C#", "D", "D#", "E", "F", "F#", "G#", "A", "A#", "B"
-// ];
+import ReplayNotes from '../components/ReplayNotes';
+import { notification } from 'antd';
 
 class App extends Component {
   constructor(props) {
@@ -24,7 +22,8 @@ class App extends Component {
       currentKey: 0,
       minRange: 3,
       maxRange: 4,
-      referenceNoteOctave: 4
+      referenceNoteOctave: 4,
+      notesPlayed: []
     };
 
   }
@@ -36,6 +35,10 @@ class App extends Component {
   setReferenceOctave = (num) => {
     //minus 2 in the equation is to align with the correct value for referenceNoteOctave
     this.setState({ referenceNoteOctave: num });
+  }
+
+  setNotesPlayed = (notesPlayed) => {
+    this.setState({ notesPlayed: notesPlayed});
   }
 
   updateNumNotes = (num) => {
@@ -51,8 +54,28 @@ class App extends Component {
     this.setState({ maxRange : newRange[1] }, () => console.log("maxRange: " + this.state.maxRange));
   }
 
+  handleGuessClick = (getCurrNote, noteValue) => {
+    const arrayOfNotes = this.state.arrayOfNotes;
+
+    if (getCurrNote === noteValue) {
+      notification['success']({
+        message: 'Gottem',
+        description: 'You got the correct note, it was ' + arrayOfNotes[getCurrNote % arrayOfNotes.length], 
+      });
+    }
+  }
+
   render () {
-    const { arrayOfNotes, currentNote, numNotesToPlay, currentKey, minRange, maxRange, referenceNoteOctave } = this.state;
+    const { 
+      arrayOfNotes, 
+      currentNote, 
+      numNotesToPlay, 
+      currentKey, 
+      minRange, 
+      maxRange, 
+      referenceNoteOctave,
+      notesPlayed,
+    } = this.state;
 
     return (
       <div style={{height: "100%", width: "100%", display: 'flex', alignItems: 'center', flexDirection: "column"}}>
@@ -63,11 +86,16 @@ class App extends Component {
             currentKey={arrayOfNotes[currentKey]}
           />
           <NoteGenerator 
+            arrayOfNotes={arrayOfNotes}
             setCurrNote={this.setCurrNote}
             numNotesToPlay={numNotesToPlay} 
             currentKey={currentKey}
             minRange={minRange}
             maxRange={maxRange}
+            setNotesPlayed={this.setNotesPlayed}
+          />
+          <ReplayNotes 
+            notesPlayed={notesPlayed}
           />
         </div>
         <div style={{height: "15%", width: "100%", display: 'flex', flexWrap: 'wrap', alignItems: 'flex-start'}}>
@@ -86,8 +114,7 @@ class App extends Component {
             <GuessButton 
               key={note}
               guessNote={note} 
-              getCurrNote={currentNote} 
-              noteValue={i} 
+              onClick={() => this.handleGuessClick(currentNote, i)}
             />
           ))}
         </div>
