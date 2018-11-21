@@ -129,7 +129,7 @@ export default class Game1 extends Component {
           {this.state.arrayOfNotes.map((note, i) => (
             <GuessButton 
               key={note}
-              guessNote={note} 
+              guessName={note} 
               onClick={() => this.handleGuessClick(currentNote, i)}
             />
           ))}

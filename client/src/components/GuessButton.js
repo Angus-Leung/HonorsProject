@@ -2,11 +2,11 @@ import React from 'react';
 import { Button } from 'antd';
 import "./GuessButton.css"
 
-export default ({ guessNote, onClick }) => (
+export default ({ guessName, onClick }) => (
     <Button
         className='guess-button'
         onClick={onClick}
     >
-        {guessNote}
+        {guessName}
     </Button>
 );
