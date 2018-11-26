@@ -5,6 +5,7 @@ import IntervalGenerator from './IntervalGenerator';
 import ReplayInterval from './ReplayInterval';
 import GuessButton from '../components/GuessButton';
 import { notification } from 'antd';
+import ScoreTracker from './ScoreTracker';
 
 
 export default class Game2 extends Component {
@@ -19,9 +20,19 @@ export default class Game2 extends Component {
           notesPlayed: [],
           minRange: 3,
           maxRange: 4,
-          currInterval: 0
+          currInterval: "",
+          score: 0,
+          totalPlayed: 0
         };
       }
+
+    updateTotal = () => {
+      this.setState({ totalPlayed : this.state.totalPlayed + 1});
+    }
+  
+    updateScore = () => {
+      this.setState({ score : this.state.score + 1});
+    }
 
     updateRange = (newRange) => {
         this.setState({ minRange : newRange[0] }, () => console.log("minRange: " + this.state.minRange));
@@ -44,12 +55,21 @@ export default class Game2 extends Component {
           description: 'You got the correct interval, it was ' + arrayOfIntervals[guessInterval],
           duration: 1.5 
         });
-      } else {
+        this.updateScore();
+        this.updateTotal();
+      } else if (getInterval === "") {
+        notification['error']({
+          message: 'Ooops',
+          description: 'Please generate a new interval before guessing',
+          duration: 1.5 
+        });
+      }else {
         notification['error']({
           message: 'Wrong : (',
           description: 'Guess Again',
           duration: 1.25 
         });
+        this.updateTotal();
       }
     }
 
@@ -59,7 +79,9 @@ export default class Game2 extends Component {
       minRange, 
       maxRange,
       notesPlayed,
-      currInterval
+      currInterval,
+      score,
+      totalPlayed
     } = this.state;
 
 
@@ -86,6 +108,12 @@ export default class Game2 extends Component {
               onClick={() => this.handleGuessClick(currInterval, i)}
             />
           ))}
+        </div>
+        <div style={{height: "30%", width: "100%", display: 'flex', flexWrap: 'wrap', alignItems: 'center'}}> 
+          <ScoreTracker
+            score={score}
+            total={totalPlayed}
+          />
         </div>
       </div>
     )

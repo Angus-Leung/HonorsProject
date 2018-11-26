@@ -9,6 +9,7 @@ import ReferenceNote from '../components/ReferenceNote';
 import ReferenceOctaveSelector from '../components/ReferenceOctaveSelector';
 import ReplayNotes from '../components/ReplayNotes';
 import ScaleSelector from '../components/ScaleSelector';
+import ScoreTracker from '../components/ScoreTracker';
 import { notification } from 'antd';
 
 export default class Game1 extends Component {
@@ -19,19 +20,29 @@ export default class Game1 extends Component {
     this.state = {
       arrayOfNotes: ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"],
       playableScaleNotes: [0, 2, 4, 5, 7, 9, 11],
-      currentNote: 0, 
+      currentNote: "", 
       numNotesToPlay: 1,
       currentKey: 0,
       minRange: 3,
       maxRange: 4,
       referenceNoteOctave: 4,
-      notesPlayed: []
+      notesPlayed: [],
+      score: 0,
+      totalPlayed: 0
     };
 
   }
 
+  updateTotal = () => {
+    this.setState({ totalPlayed : this.state.totalPlayed + 1});
+  }
+
+  updateScore = () => {
+    this.setState({ score : this.state.score + 1});
+  }
+
   setPlayableScaleNotes = (notesInScales) => {
-    this.setState({playableScaleNotes : notesInScales})
+    this.setState({playableScaleNotes : notesInScales});
   }
 
   setCurrNote = (noteNumber) => {
@@ -69,25 +80,40 @@ export default class Game1 extends Component {
         description: 'You got the correct note, it was ' + arrayOfNotes[getCurrNote % arrayOfNotes.length],
         duration: 1.5 
       });
+      this.updateScore();
+      this.updateTotal();
+    } else if (getCurrNote === "") {
+      notification['error']({
+        message: 'Ooops',
+        description: 'Please generate a new note before guessing',
+        duration: 1.5 
+      });
     } else {
       notification['error']({
         message: 'Wrong : (',
         description: 'Guess Again',
         duration: 1.25 
       });
+      this.updateTotal();
     }
+    console.log(this.state.score);
+    console.log(this.state.totalPlayed);
+
   }
 
   render () {
     const { 
       arrayOfNotes, 
-      currentNote, 
+      currentNote,
+      playableScaleNotes, 
       numNotesToPlay, 
       currentKey, 
       minRange, 
       maxRange, 
       referenceNoteOctave,
       notesPlayed,
+      score,
+      totalPlayed
     } = this.state;
 
     return (
@@ -101,6 +127,7 @@ export default class Game1 extends Component {
           <NoteGenerator 
             arrayOfNotes={arrayOfNotes}
             setCurrNote={this.setCurrNote}
+            playableScaleNotes={playableScaleNotes}
             numNotesToPlay={numNotesToPlay} 
             currentKey={currentKey}
             minRange={minRange}
@@ -111,7 +138,7 @@ export default class Game1 extends Component {
             notesPlayed={notesPlayed}
           />
         </div>
-        <div style={{height: "15%", width: "100%", display: 'flex', flexWrap: 'wrap', alignItems: 'flex-start'}}>
+        <div style={{height: "25%", width: "100%", display: 'flex', flexWrap: 'wrap', alignItems: 'flex-start'}}>
           <ReferenceOctaveSelector
             setReferenceOctave={this.setReferenceOctave}
             referenceNoteOctave={referenceNoteOctave}
@@ -134,6 +161,10 @@ export default class Game1 extends Component {
             />
           ))}
         </div>
+        <ScoreTracker 
+          score={score}
+          total={totalPlayed}
+        />
         <NumNotesSlider 
           value={numNotesToPlay}
           updateNumNotes={this.updateNumNotes}

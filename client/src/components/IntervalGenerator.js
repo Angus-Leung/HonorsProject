@@ -16,13 +16,19 @@ export default ({
     }
 
     let handleClick = async () => {
-        
+
         console.log(soundsArray.length);
         let lowestNote = (minRange - 1) * 12;
         let highestNote = (maxRange - 1) * 12;
-        
+
         let firstNotePlayed = Math.floor(Math.random() * (highestNote - lowestNote)) + lowestNote;
-        let secondNotePlayed = Math.floor(Math.random() * ((firstNotePlayed + 13) - (firstNotePlayed - 13))) + (firstNotePlayed - 13);
+        let secondNotePlayed;
+        if (firstNotePlayed > (soundsArray.length - 13)) {
+            secondNotePlayed = Math.floor(Math.random() * (50 - (firstNotePlayed - 13))) + (firstNotePlayed - 13);
+        } else {
+            secondNotePlayed = Math.floor(Math.random() * ((firstNotePlayed + 13) - (firstNotePlayed - 13))) + (firstNotePlayed - 13);
+        }
+        
         
         let playedNotes = [];
         let currInterval = 0;

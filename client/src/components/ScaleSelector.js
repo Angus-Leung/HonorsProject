@@ -1,7 +1,7 @@
 import React from 'react';
 import { Checkbox } from 'antd';
 
-export default () => {
+export default ({setPlayableScaleNotes}) => {
     const CheckboxGroup = Checkbox.Group;
     let majorScale = [0, 2, 4, 5, 7, 9, 11];
     let minorScale = [0, 2, 3, 5, 7, 8, 10];
@@ -10,15 +10,39 @@ export default () => {
     let majorBlues = [0, 2, 3, 4, 7, 8];
     let minorBlues = [0, 3, 5, 6, 7, 10];
 
+    let playableNotes = [];
 
-    function onChange(checkedValues) {
-        //setPlayableScaleNotes
+    let addScale = (scale) => {
+        for (let i=0; i < scale.length; i++) {
+            if(playableNotes.indexOf(scale[i]) === -1) {
+                playableNotes.push(scale[i]);
+              }
+        }
+    }
+
+    let onChange = (checkedValues) => {
+        playableNotes = [];
         console.log('checked = ', checkedValues);
         if (checkedValues.includes("Major")) {
-            console.log("has major!")
-        } else {
-            console.log("cibai")
+            addScale(majorScale);    
         }
+        if (checkedValues.includes("Minor")) {
+            addScale(minorScale);   
+        }
+        if (checkedValues.includes("Major Pentatonic")) {
+            addScale(majorPentatonic);   
+        }
+        if (checkedValues.includes("Minor Pentatonic")) {
+            addScale(minorPentatonic);   
+        }
+        if (checkedValues.includes("Major Blues")) {
+            addScale(majorBlues);   
+        }
+        if (checkedValues.includes("Minor Blues")) {
+            addScale(minorBlues);   
+        }
+        //console.log(playableNotes);
+        setPlayableScaleNotes(playableNotes);
     }
 
     const plainOptions = [
