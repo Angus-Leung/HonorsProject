@@ -15,7 +15,7 @@ export default ({currentKey, referenceNoteOctave}) => {
     return (
         <div className="reference-note-container">
             <Button
-                className="reference-note-button"
+                className="reference-note-button pa-1"
                 block
                 onClick = {handleClick}
             >

@@ -51,7 +51,7 @@ export default ({
     }
     
     return (
-        <div className="interval-generator-container">
+        <div className="interval-generator-container ma-1">
             <Button
                 className="interval-generator-button"
                 block

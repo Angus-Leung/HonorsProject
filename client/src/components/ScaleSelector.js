@@ -55,7 +55,7 @@ export default ({setPlayableScaleNotes}) => {
                         ];
 
     return (
-        <div style={{height: "100%", width: "25%", display: 'flex', flexWrap: 'wrap', alignItems: 'center'}}>
+        <div style={{display: 'flex', flexWrap: 'wrap', alignItems: 'center'}}>
             <CheckboxGroup options={plainOptions} defaultValue={['Major']} onChange={onChange} />
         </div>
     );

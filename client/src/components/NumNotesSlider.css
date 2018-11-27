@@ -1,9 +1,6 @@
 .num-notes-slider-container {
-  
-  width: 100%;
-  height: 20%;
   display: flex;
-  justify-content: flex-end;
+  flex-direction: row;
   flex-wrap: wrap;
 }
 

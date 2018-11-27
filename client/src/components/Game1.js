@@ -1,5 +1,6 @@
-import React, { Component } from 'react';
 import '../containers/App.css'
+
+import React, { Component } from 'react';
 import GuessButton from '../components/GuessButton';
 import NoteGenerator from '../components/NoteGenerator';
 import NumNotesSlider from '../components/NumNotesSlider'
@@ -10,13 +11,17 @@ import ReferenceOctaveSelector from '../components/ReferenceOctaveSelector';
 import ReplayNotes from '../components/ReplayNotes';
 import ScaleSelector from '../components/ScaleSelector';
 import ScoreTracker from '../components/ScoreTracker';
-import { notification } from 'antd';
+
+import { Collapse, notification } from 'antd';
+
+const { Panel } = Collapse;
 
 export default class Game1 extends Component {
   constructor(props) {
     super(props);
 
     this.updateNumNotes = this.updateNumNotes.bind(this);
+    this.guessBuffer = []
     this.state = {
       arrayOfNotes: ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"],
       playableScaleNotes: [0, 2, 4, 5, 7, 9, 11],
@@ -71,30 +76,44 @@ export default class Game1 extends Component {
     this.setState({ maxRange : newRange[1] }, () => console.log("maxRange: " + this.state.maxRange));
   }
 
-  handleGuessClick = (getCurrNote, noteValue) => {
-    const arrayOfNotes = this.state.arrayOfNotes;
+  handleGuessClick = (notesPlayed, guessNote) => {
+    const { arrayOfNotes } = this.state
 
-    if (getCurrNote === noteValue) {
-      notification['success']({
-        message: 'Gottem',
-        description: 'You got the correct note, it was ' + arrayOfNotes[getCurrNote % arrayOfNotes.length],
-        duration: 1.5 
-      });
-      this.updateScore();
-      this.updateTotal();
-    } else if (getCurrNote === "") {
+    if (!notesPlayed.length) {
       notification['error']({
         message: 'Ooops',
         description: 'Please generate a new note before guessing',
         duration: 1.5 
       });
-    } else {
-      notification['error']({
-        message: 'Wrong : (',
-        description: 'Guess Again',
-        duration: 1.25 
-      });
-      this.updateTotal();
+      return;
+    }
+
+    this.guessBuffer.push(guessNote);
+
+    if (this.guessBuffer.length === notesPlayed.length) {
+      console.log(this.guessBuffer, notesPlayed)
+      const resolveSuccessful = this.guessBuffer.every(
+        (value, i) => value === notesPlayed[i] % 12 // mod 12 for octave
+      )
+
+      if (resolveSuccessful) {
+        notification['success']({
+          message: 'Gottem',
+          description: `Correct, you guessed ${this.guessBuffer.map(noteIndex => arrayOfNotes[noteIndex]).join(', ')}`,
+          duration: 1.5 
+        });
+        this.setState({ currentNote : "" });
+        this.updateScore();
+        this.updateTotal();
+      } else {
+        notification['error']({
+          message: 'Wrong : (',
+          description: 'Guess Again',
+          duration: 1.25 
+        });
+        this.updateTotal();
+      }
+      this.guessBuffer = []
     }
     console.log(this.state.score);
     console.log(this.state.totalPlayed);
@@ -117,59 +136,80 @@ export default class Game1 extends Component {
     } = this.state;
 
     return (
-      <div style={{height: "100%", width: "100%", display: 'flex', alignItems: 'center', flexDirection: "column"}}>
-        <div style={{height: "25%", width: "100%", display: 'flex', flexWrap: 'wrap', alignItems: 'center'}}>
-          <KeySelector
-            updateCurrKey={this.updateCurrKey}
-            keys={arrayOfNotes}
-            currentKey={arrayOfNotes[currentKey]}
-          />
-          <NoteGenerator 
-            arrayOfNotes={arrayOfNotes}
-            setCurrNote={this.setCurrNote}
-            playableScaleNotes={playableScaleNotes}
-            numNotesToPlay={numNotesToPlay} 
-            currentKey={currentKey}
-            minRange={minRange}
-            maxRange={maxRange}
-            setNotesPlayed={this.setNotesPlayed}
-          />
-          <ReplayNotes 
-            notesPlayed={notesPlayed}
-          />
-        </div>
-        <div style={{height: "25%", width: "100%", display: 'flex', flexWrap: 'wrap', alignItems: 'flex-start'}}>
-          <ReferenceOctaveSelector
-            setReferenceOctave={this.setReferenceOctave}
-            referenceNoteOctave={referenceNoteOctave}
-            currentKey={arrayOfNotes[currentKey]}
-          />
-          <ScaleSelector 
-            setPlayableScaleNotes={this.setPlayableScaleNotes}
-          />
-          <ReferenceNote 
-            referenceNoteOctave={referenceNoteOctave}
-            currentKey={currentKey}
-          />
-        </div>
-        <div className="guess-button-container">
-          {this.state.arrayOfNotes.map((note, i) => (
-            <GuessButton 
-              key={note}
-              guessName={note} 
-              onClick={() => this.handleGuessClick(currentNote, i)}
+      <div style={{height: "100%", width: "100%", display: 'flex', flex: 1, alignItems: 'center', flexDirection: "row"}}>
+
+         <div className='game-container h-100 fl-2 overflow-y-scroll br pr-1'>
+          <div className='pa-3 w-100' style={{display: 'flex', flexWrap: 'wrap', alignItems: 'center'}}>
+            <KeySelector
+              updateCurrKey={this.updateCurrKey}
+              keys={arrayOfNotes}
+              currentKey={arrayOfNotes[currentKey]}
             />
-          ))}
+            <NoteGenerator 
+              arrayOfNotes={arrayOfNotes}
+              setCurrNote={this.setCurrNote}
+              playableScaleNotes={playableScaleNotes}
+              numNotesToPlay={numNotesToPlay} 
+              currentKey={currentKey}
+              minRange={minRange}
+              maxRange={maxRange}
+              setNotesPlayed={this.setNotesPlayed}
+            />
+            <ReplayNotes 
+              notesPlayed={notesPlayed}
+            />
+          </div>
+          <div className='pa-2' style={{width: "100%", display: 'flex', justifyContent: 'center'}}>
+            <ReferenceNote 
+              referenceNoteOctave={referenceNoteOctave}
+              currentKey={currentKey}
+            />
+          </div>
+          <div className="w-100 fb-row fb-justify-center pb-1">
+            <div className="guess-button-container">
+              {this.state.arrayOfNotes.map((note, i) => (
+                <GuessButton 
+                  key={note}
+                  guessName={note} 
+                  onClick={() => this.handleGuessClick(notesPlayed, i)}
+                />
+              ))}
+            </div>
+          </div>
+          <div className='fb-row fb-justify-center pt-2'>
+            <ScoreTracker 
+              score={score}
+              total={totalPlayed}
+            />
+          </div>
+        </div> 
+         
+        <div className='settings-panel w-100 h-100 fl-1'>
+          <Collapse style={{ width: '100%' }} bordered={false} defaultActiveKey={['1']}>
+            <Panel header="Number of notes" key="1">
+              <NumNotesSlider 
+                value={numNotesToPlay}
+                updateNumNotes={this.updateNumNotes}
+              />
+            </Panel>
+            <Panel header="Available range of notes" key="2">
+              <RangeSlider updateRange={this.updateRange} />
+            </Panel>
+            <Panel header="Octave" key="3">
+              <ReferenceOctaveSelector
+                setReferenceOctave={this.setReferenceOctave}
+                referenceNoteOctave={referenceNoteOctave}
+                currentKey={arrayOfNotes[currentKey]}
+              />
+            </Panel>
+            <Panel header="Scale" key="4">
+              <ScaleSelector 
+                setPlayableScaleNotes={this.setPlayableScaleNotes}
+              />
+            </Panel>
+
+          </Collapse>
         </div>
-        <ScoreTracker 
-          score={score}
-          total={totalPlayed}
-        />
-        <NumNotesSlider 
-          value={numNotesToPlay}
-          updateNumNotes={this.updateNumNotes}
-        />
-        <RangeSlider updateRange={this.updateRange} />
       </div>
     )
   }

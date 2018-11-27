@@ -18,11 +18,116 @@ html, body {
   display: flex;
   width: 60%;
   height: 35%;
-  flex-wrap: wrap
+  flex-wrap: wrap;
 }
 
 .slider-container {
   display: flex;
   width: 80%;
   justify-content: center
+}
+
+.content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.fb-row {
+  display: flex;
+  flex-direction: row;
+}
+
+.fb-col {
+  display: flex;
+  flex-direction: column;
+}
+
+.fb-justify-center {
+  justify-content: center;
+}
+
+.fb-align-center {
+  align-items: center;
+}
+
+.f-1 {
+  font-size: 1rem;
+}
+
+.f-2 {
+  font-size: 2rem;
+}
+
+.ma-1 {
+  margin: 2px;
+}
+
+.pb-1 {
+  padding-bottom: 0.3rem;
+}
+
+.fl-1 {
+  flex: 1;
+}
+
+.fl-2 {
+  flex: 2;
+}
+
+.fl-3 {
+  flex: 3;
+}
+
+.fl-5 {
+  flex: 5;
+}
+
+.fl-8 {
+  flex: 8;
+}
+
+.overflow-y-scroll {
+  overflow-y: scroll;
+}
+
+.h-100 {
+  height: 100%;
+}
+
+.w-100 {
+  width: 100%;
+}
+
+.pa-1 {
+  padding: .35rem;
+}
+.pl-3 {
+  padding-left: 1.2rem;
+}
+.pa-2 {
+  padding: .7rem;
+}
+
+.pa-3 {
+  padding: 1.2rem;
+}
+
+.pr-3 {
+  padding-right: 1.2rem;
+}
+
+.pt-2 {
+  padding-top: .7rem;
+}
+.pr-1 {
+  padding: 0.3rem;
+}
+
+.bb {
+  border-bottom: 1px solid #e8e8e8;
+}
+
+.br {
+  border-right: 1px solid #e8e8e8;
 }

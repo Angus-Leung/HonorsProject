@@ -4,9 +4,10 @@ import RangeSlider from '../components/RangeSlider'
 import IntervalGenerator from './IntervalGenerator';
 import ReplayInterval from './ReplayInterval';
 import GuessButton from '../components/GuessButton';
-import { notification } from 'antd';
+import { Collapse, notification } from 'antd';
 import ScoreTracker from './ScoreTracker';
 
+const { Panel } = Collapse;
 
 export default class Game2 extends Component {
   
@@ -55,6 +56,8 @@ export default class Game2 extends Component {
           description: 'You got the correct interval, it was ' + arrayOfIntervals[guessInterval],
           duration: 1.5 
         });
+
+        this.setState({ currInterval: "" });
         this.updateScore();
         this.updateTotal();
       } else if (getInterval === "") {
@@ -86,35 +89,47 @@ export default class Game2 extends Component {
 
 
     return (
-      <div style={{height: "100%", width: "100%", display: 'flex', alignItems: 'center', flexDirection: "column"}}>
-        <div style={{height: "25%", width: "100%", display: 'flex', flexWrap: 'wrap', alignItems: 'center'}}> 
-          <RangeSlider updateRange={this.updateRange} />
-          <IntervalGenerator 
-            arrayOfNotes={arrayOfNotes}
-            minRange={minRange}
-            maxRange={maxRange}
-            setCurrInterval={this.setCurrInterval}
-            setNotesPlayed={this.setNotesPlayed}
-          />
-          <ReplayInterval
-            notesPlayed={notesPlayed}
-          />
-        </div>
-        <div className="guess-button-container">
-          {this.state.arrayOfIntervals.map((interval, i) => (
-            <GuessButton 
-              key={interval}
-              guessName={interval} 
-              onClick={() => this.handleGuessClick(currInterval, i)}
+      <div style={{height: "100%", width: "100%", display: 'flex', alignItems: 'center', flexDirection: "row"}}>
+        <div className = "fb-col fl-2 h-100 br fb-align-center">
+          <div className="fb-row pa-3 ">
+            <IntervalGenerator
+              className="ma-1" 
+              arrayOfNotes={arrayOfNotes}
+              minRange={minRange}
+              maxRange={maxRange}
+              setCurrInterval={this.setCurrInterval}
+              setNotesPlayed={this.setNotesPlayed}
             />
-          ))}
+            <ReplayInterval
+              notesPlayed={notesPlayed}
+            />
+          </div>
+          <div className="w-100 fb-row fb-justify-center pb-1">
+            <div className="guess-button-container fb-row fb-justify-center">
+              {this.state.arrayOfIntervals.map((interval, i) => (
+                <GuessButton 
+                  key={interval}
+                  guessName={interval} 
+                  onClick={() => this.handleGuessClick(currInterval, i)}
+                />
+              ))}
+            </div>
+          </div>
+          <div className='fb-row fb-justify-center pt-2'>
+            <ScoreTracker
+              score={score}
+              total={totalPlayed}
+            />
+          </div>
         </div>
-        <div style={{height: "30%", width: "100%", display: 'flex', flexWrap: 'wrap', alignItems: 'center'}}> 
-          <ScoreTracker
-            score={score}
-            total={totalPlayed}
-          />
+        <div className='settings-panel w-100 h-100 fl-1'>
+          <Collapse style={{ width: '100%' }} bordered={false} defaultActiveKey={['1']}>
+            <Panel header="Available range of notes" key="2">
+              <RangeSlider updateRange={this.updateRange} />
+            </Panel>
+          </Collapse>
         </div>
+
       </div>
     )
     

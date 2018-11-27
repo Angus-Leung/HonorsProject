@@ -1,6 +1,6 @@
 
 .guess-button {
-  width: 33%;
+  width: calc(33% - 1rem);
   height: 25%;
   text-align: center;
 }

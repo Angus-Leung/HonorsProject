@@ -24,7 +24,7 @@ export default ({
     }
     
     return (
-        <div className="replay-interval-container">
+        <div className="replay-interval-container ma-1">
             <Button
                 className="replay-interval-button"
                 block

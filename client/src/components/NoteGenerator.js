@@ -65,7 +65,7 @@ export default ({
     return (
         <div className="note-generator-container">
             <Button
-                className="note-generator-button"
+                className="note-generator-button pa-1"
                 block
                 onClick = {handleClick}
             >
