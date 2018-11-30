@@ -39,7 +39,7 @@ export default class Game1 extends Component {
   }
 
   clearGuess = () => {
-
+    this.guessBuffer = [];
   }
 
   updateTotal = () => {
@@ -195,6 +195,8 @@ export default class Game1 extends Component {
               <NumNotesSlider 
                 value={numNotesToPlay}
                 updateNumNotes={this.updateNumNotes}
+                clearGuess={this.clearGuess}
+                setNotesPlayed={this.setNotesPlayed}
               />
             </Panel>
             <Panel header="Available range of notes" key="2">

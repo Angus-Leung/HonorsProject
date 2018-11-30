@@ -5,13 +5,14 @@ import "./NumNotesSlider.css"
 class NumNotesSlider extends Component {
 
     render() {
-        const {updateNumNotes, value} = this.props
+        const {updateNumNotes, value, clearGuess, setNotesPlayed} = this.props
 
         let onChange = (value) => {
             updateNumNotes(value);
-            
+            setNotesPlayed([]);
+            clearGuess();
         };
-
+//onChange={updateNumNotes}
 
         return (
             <div className='num-notes-slider-container'>
@@ -20,7 +21,7 @@ class NumNotesSlider extends Component {
                         className='num-notes-slider'
                         min={1}
                         max={20}
-                        onChange={updateNumNotes}
+                        onChange={onChange}
                         value={typeof value === 'number' ? value : 0}
                     />
                 </div>
