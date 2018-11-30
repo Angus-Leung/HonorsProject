@@ -6,6 +6,13 @@ class NumNotesSlider extends Component {
 
     render() {
         const {updateNumNotes, value} = this.props
+
+        let onChange = (value) => {
+            updateNumNotes(value);
+            
+        };
+
+
         return (
             <div className='num-notes-slider-container'>
                 <div className='num-notes-component-slider'>

@@ -38,6 +38,10 @@ export default class Game1 extends Component {
 
   }
 
+  clearGuess = () => {
+
+  }
+
   updateTotal = () => {
     this.setState({ totalPlayed : this.state.totalPlayed + 1});
   }
@@ -102,7 +106,8 @@ export default class Game1 extends Component {
           description: `Correct, you guessed ${this.guessBuffer.map(noteIndex => arrayOfNotes[noteIndex]).join(', ')}`,
           duration: 1.5 
         });
-        this.setState({ currentNote : "" });
+        // this.setState({ currentNote : "" });
+        this.setNotesPlayed([]);
         this.updateScore();
         this.updateTotal();
       } else {
