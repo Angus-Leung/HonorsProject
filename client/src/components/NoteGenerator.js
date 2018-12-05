@@ -27,7 +27,7 @@ export default ({
         let highestNote = (maxRange - 1) * 12;
         
         let scaleAdjustedForKey = playableScaleNotes.map((x => (x + currentKey) % 12));
-        console.log("AdjustedScale " + scaleAdjustedForKey);
+        // console.log("AdjustedScale " + scaleAdjustedForKey);
 
         let playableNotes = [];
         for (let j=lowestNote; j < highestNote; j++) {
@@ -41,7 +41,7 @@ export default ({
             consoleLogPlayableNotes.push(arrayOfNotes[(playableNotes[j] % 12)]);
         }
         console.log("Playable Notes: " + consoleLogPlayableNotes);
-        console.log("Playable Notes Range " + playableNotes);
+        // console.log("Playable Notes Range " + playableNotes);
 
         for (let i=0; i < numNotesToPlay; i++) {       
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Input, Progress } from 'antd';
+import { Progress } from 'antd';
 
 export default ({ score, total }) => {
 

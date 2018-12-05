@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Header, Menu, Icon, Radio } from 'antd';
+import { Menu, Icon } from 'antd';
 
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 
@@ -8,7 +8,6 @@ import IntervalTraining from '../components/Game2';
 
 import './App.css'
 
-const RadioGroup = Radio.Group;
 const SubMenu = Menu.SubMenu;
 const MenuItemGroup = Menu.ItemGroup;
 

@@ -1,31 +1,43 @@
 import React, { Component } from 'react';
 import '../containers/App.css'
-import RangeSlider from '../components/RangeSlider'
+import IntervalRangeSlider from '../components/IntervalRangeSlider'
 import IntervalGenerator from './IntervalGenerator';
 import ReplayInterval from './ReplayInterval';
 import GuessButton from '../components/GuessButton';
+import IntervalModeSelector from '../components/IntervalModeSelector';
 import { Collapse, notification } from 'antd';
 import ScoreTracker from './ScoreTracker';
+import IntervalSelector from './IntervalSelector';
 
 const { Panel } = Collapse;
 
 export default class Game2 extends Component {
   
     constructor(props) {
-        super(props);
-    
-        this.state = {
-          arrayOfNotes: ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"],
-          arrayOfIntervals: ["Unison", "Min 2nd", "Maj 2nd", "Min 3rd", "Maj 3rd", "Perfect 4th", "Tri Tone",
-                             "Perfect 5th", "Min 6th", "Maj 6th", "Min 7th", "Maj 7th", "Perfect Octave"],
-          notesPlayed: [],
-          minRange: 3,
-          maxRange: 4,
-          currInterval: "",
-          score: 0,
-          totalPlayed: 0
-        };
-      }
+      super(props);
+  
+      this.state = {
+        arrayOfNotes: ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"],
+        arrayOfIntervals: ["Unison", "Min 2nd", "Maj 2nd", "Min 3rd", "Maj 3rd", "Perfect 4th", "Tri Tone",
+                            "Perfect 5th", "Min 6th", "Maj 6th", "Min 7th", "Maj 7th", "Perfect Octave"],
+        notesPlayed: [],
+        minRange: 2,
+        maxRange: 3,
+        currInterval: "",
+        score: 0,
+        totalPlayed: 0,
+        currentOctaveMode: "Both",
+        playableIntervals: [2, 3, 4, 5, 7, 12]
+      };
+    }
+
+    setPlayableIntervals = (intervals) => {
+      this.setState({playableIntervals : intervals});
+    }
+
+    updateCurrOctaveMode = (octaveMode) => {
+      this.setState({ currentOctaveMode : octaveMode});
+    }
 
     updateTotal = () => {
       this.setState({ totalPlayed : this.state.totalPlayed + 1});
@@ -79,12 +91,15 @@ export default class Game2 extends Component {
   render () {
     const { 
       arrayOfNotes,
+      arrayOfIntervals,
       minRange, 
       maxRange,
       notesPlayed,
       currInterval,
       score,
-      totalPlayed
+      totalPlayed,
+      currentOctaveMode,
+      playableIntervals
     } = this.state;
 
 
@@ -99,6 +114,9 @@ export default class Game2 extends Component {
               maxRange={maxRange}
               setCurrInterval={this.setCurrInterval}
               setNotesPlayed={this.setNotesPlayed}
+              currentOctaveMode={currentOctaveMode}
+              arrayOfIntervals={arrayOfIntervals}
+              playableIntervals={playableIntervals}
             />
             <ReplayInterval
               notesPlayed={notesPlayed}
@@ -124,8 +142,20 @@ export default class Game2 extends Component {
         </div>
         <div className='settings-panel w-100 h-100 fl-1'>
           <Collapse style={{ width: '100%' }} bordered={false} defaultActiveKey={['1']}>
-            <Panel header="Available range of notes" key="2">
-              <RangeSlider updateRange={this.updateRange} />
+            <Panel header="Available First Note Range" key="2">
+              <IntervalRangeSlider updateRange={this.updateRange} />
+            </Panel>
+            <Panel header="Select Interval Mode" key="3">
+              <IntervalModeSelector
+                currentOctaveMode={currentOctaveMode}
+                updateCurrOctaveMode={this.updateCurrOctaveMode}
+              />
+            </Panel>
+            <Panel header="Select Intervals" key="4">
+              <IntervalSelector
+                arrayOfIntervals={arrayOfIntervals}
+                setPlayableIntervals={this.setPlayableIntervals}
+              />
             </Panel>
           </Collapse>
         </div>

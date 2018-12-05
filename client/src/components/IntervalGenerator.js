@@ -5,10 +5,13 @@ import "./NoteGenerator.css"
 
 export default ({
     arrayOfNotes,
+    arrayOfIntervals,
     minRange,
     maxRange, 
     setCurrInterval,
-    setNotesPlayed
+    setNotesPlayed,
+    currentOctaveMode,
+    playableIntervals
 }) => {
 
     const delay = (ms) => {
@@ -17,19 +20,29 @@ export default ({
 
     let handleClick = async () => {
 
-        console.log(soundsArray.length);
-        let lowestNote = (minRange - 1) * 12;
-        let highestNote = (maxRange - 1) * 12;
+        // console.log(soundsArray.length);
+        let firstNotelowest = minRange * 12;
+        let firstNoteHighest = maxRange * 12;
+        let firstNotePlayed = Math.floor(Math.random() * (firstNoteHighest - firstNotelowest)) + firstNotelowest;
+        
 
-        let firstNotePlayed = Math.floor(Math.random() * (highestNote - lowestNote)) + lowestNote;
-        let secondNotePlayed;
-        if (firstNotePlayed > (soundsArray.length - 13)) {
-            secondNotePlayed = Math.floor(Math.random() * (50 - (firstNotePlayed - 13))) + (firstNotePlayed - 13);
+        const reducer = (a, c) => [...a, c, -c];
+        let availableIntervals = [];
+
+
+        if (currentOctaveMode === "Ascending") {
+            availableIntervals = playableIntervals;
+        } else if (currentOctaveMode === "Descending") {
+            availableIntervals = playableIntervals.map(x => -x);
         } else {
-            secondNotePlayed = Math.floor(Math.random() * ((firstNotePlayed + 13) - (firstNotePlayed - 13))) + (firstNotePlayed - 13);
+            availableIntervals = playableIntervals.reduce(reducer, []);
         }
+
+        // console.log(availableIntervals);
         
-        
+        let randomInterval = Math.floor(Math.random() * availableIntervals.length)
+        let secondNotePlayed = availableIntervals[randomInterval] + firstNotePlayed;
+
         let playedNotes = [];
         let currInterval = 0;
 
@@ -46,6 +59,7 @@ export default ({
 
         console.log("first note played: " + playedNotes[0] + " = " + (arrayOfNotes[playedNotes[0] % 12] ));
         console.log("second note played: " + playedNotes[1] + " = " + (arrayOfNotes[playedNotes[1] % 12] ));
+        console.log("Interval: " + arrayOfIntervals[currInterval]);
         setNotesPlayed(playedNotes);
         
     }

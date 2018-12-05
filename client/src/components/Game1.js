@@ -104,7 +104,7 @@ export default class Game1 extends Component {
         notification['success']({
           message: 'Gottem',
           description: `Correct, you guessed ${this.guessBuffer.map(noteIndex => arrayOfNotes[noteIndex]).join(', ')}`,
-          duration: 1.5 
+          duration: 1.75 
         });
         // this.setState({ currentNote : "" });
         this.setNotesPlayed([]);
@@ -120,8 +120,7 @@ export default class Game1 extends Component {
       }
       this.guessBuffer = []
     }
-    console.log(this.state.score);
-    console.log(this.state.totalPlayed);
+    
 
   }
 
