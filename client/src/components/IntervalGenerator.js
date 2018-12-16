@@ -1,6 +1,6 @@
 import React from 'react';
 import soundsArray from '../utils/fileToArray';
-import { Button } from 'antd';
+import { Button, notification } from 'antd';
 import "./NoteGenerator.css"
 
 export default ({
@@ -38,7 +38,14 @@ export default ({
             availableIntervals = playableIntervals.reduce(reducer, []);
         }
 
-        // console.log(availableIntervals);
+        if (availableIntervals.length === 0) {
+            notification['error']({
+                message: 'Ooops',
+                description: 'Please choose at least 1 of the intervals then retry',
+                duration: 3 
+              });
+            return;
+        }
         
         let randomInterval = Math.floor(Math.random() * availableIntervals.length)
         let secondNotePlayed = availableIntervals[randomInterval] + firstNotePlayed;

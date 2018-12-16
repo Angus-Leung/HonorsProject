@@ -12,7 +12,6 @@ class NumNotesSlider extends Component {
             setNotesPlayed([]);
             clearGuess();
         };
-//onChange={updateNumNotes}
 
         return (
             <div className='num-notes-slider-container'>

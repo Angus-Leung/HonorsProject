@@ -11,6 +11,7 @@ import ReferenceOctaveSelector from '../components/ReferenceOctaveSelector';
 import ReplayNotes from '../components/ReplayNotes';
 import ScaleSelector from '../components/ScaleSelector';
 import ScoreTracker from '../components/ScoreTracker';
+import soundsArray from '../utils/fileToArray';
 
 import { Collapse, notification } from 'antd';
 
@@ -76,8 +77,15 @@ export default class Game1 extends Component {
   }
 
   updateRange = (newRange) => {
-    this.setState({ minRange : newRange[0] }, () => console.log("minRange: " + this.state.minRange));
-    this.setState({ maxRange : newRange[1] }, () => console.log("maxRange: " + this.state.maxRange));
+    this.setState({ minRange : newRange[0] });
+    this.setState({ maxRange : newRange[1] });
+  }
+
+  playReferenceNote = () => {
+        
+    const octave = 12 * (this.state.referenceNoteOctave - 2);
+    const audio = new Audio(soundsArray[this.state.currentKey + (octave)]);
+    audio.play();
   }
 
   handleGuessClick = (notesPlayed, guessNote) => {
@@ -95,7 +103,6 @@ export default class Game1 extends Component {
     this.guessBuffer.push(guessNote);
 
     if (this.guessBuffer.length === notesPlayed.length) {
-      console.log(this.guessBuffer, notesPlayed)
       const resolveSuccessful = this.guessBuffer.every(
         (value, i) => value === notesPlayed[i] % 12 // mod 12 for octave
       )
@@ -158,6 +165,7 @@ export default class Game1 extends Component {
               minRange={minRange}
               maxRange={maxRange}
               setNotesPlayed={this.setNotesPlayed}
+              playReferenceNote={this.playReferenceNote}
             />
             <ReplayNotes 
               notesPlayed={notesPlayed}
@@ -167,6 +175,7 @@ export default class Game1 extends Component {
             <ReferenceNote 
               referenceNoteOctave={referenceNoteOctave}
               currentKey={currentKey}
+              handleReferenceNoteClick={this.playReferenceNote}
             />
           </div>
           <div className="w-100 fb-row fb-justify-center pb-1">

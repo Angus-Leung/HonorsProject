@@ -1,6 +1,6 @@
 import React from 'react';
 import soundsArray from '../utils/fileToArray';
-import { Button } from 'antd';
+import { Button, notification } from 'antd';
 import "./NoteGenerator.css"
 
 export default ({
@@ -11,7 +11,8 @@ export default ({
     currentKey, 
     minRange,
     maxRange, 
-    setNotesPlayed
+    setNotesPlayed,
+    playReferenceNote
 }) => {
 
     let playedNotes = [];
@@ -22,12 +23,19 @@ export default ({
     }
 
     let handleClick = async () => {
+        if (minRange === maxRange) {
+            notification['error']({
+                message: 'Ooops',
+                description: 'The available note range cannot be 0, please move the range slider to different values and retry',
+                duration: 3 
+              });
+            return;
+        }
 
         let lowestNote = (minRange - 1) * 12;
         let highestNote = (maxRange - 1) * 12;
         
         let scaleAdjustedForKey = playableScaleNotes.map((x => (x + currentKey) % 12));
-        // console.log("AdjustedScale " + scaleAdjustedForKey);
 
         let playableNotes = [];
         for (let j=lowestNote; j < highestNote; j++) {
@@ -36,12 +44,24 @@ export default ({
             }
         }
 
+        if (playableNotes.length === 0) {
+            notification['error']({
+                message: 'Ooops',
+                description: 'Please choose one of the scales then retry',
+                duration: 3 
+              });
+            return;
+        }
+
         let consoleLogPlayableNotes = [];
         for (let j=0; j < 7; j++) {
             consoleLogPlayableNotes.push(arrayOfNotes[(playableNotes[j] % 12)]);
         }
         console.log("Playable Notes: " + consoleLogPlayableNotes);
-        // console.log("Playable Notes Range " + playableNotes);
+
+
+        playReferenceNote(); 
+        await delay(1200);
 
         for (let i=0; i < numNotesToPlay; i++) {       
 
@@ -57,7 +77,7 @@ export default ({
 
 
         };
-        console.log("notes played: " + playedNotes);
+        
         setNotesPlayed(playedNotes);
         
     }
