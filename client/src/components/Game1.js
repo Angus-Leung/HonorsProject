@@ -210,14 +210,14 @@ export default class Game1 extends Component {
             <Panel header="Available range of notes" key="2">
               <RangeSlider updateRange={this.updateRange} />
             </Panel>
-            <Panel header="Octave" key="3">
+            <Panel header="Reference Note Octave" key="3">
               <ReferenceOctaveSelector
                 setReferenceOctave={this.setReferenceOctave}
                 referenceNoteOctave={referenceNoteOctave}
                 currentKey={arrayOfNotes[currentKey]}
               />
             </Panel>
-            <Panel header="Scale" key="4">
+            <Panel header="Scales" key="4">
               <ScaleSelector 
                 setPlayableScaleNotes={this.setPlayableScaleNotes}
               />
