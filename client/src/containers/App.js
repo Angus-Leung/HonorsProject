@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Menu, Icon } from 'antd';
 
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
 
 import NoteTraining from '../components/Game1';
 import IntervalTraining from '../components/Game2';
@@ -59,8 +59,10 @@ class App extends Component {
               <Icon type='book'/> Ear Trainer
             </div>
             <div className='content fl-8 pa-3'>
+            <Switch>
               <Route exact path="/" component={NoteTraining} />
               <Route path="/interval-training" component={IntervalTraining} />
+            </Switch>
             </div>
           </div>
         </div>
