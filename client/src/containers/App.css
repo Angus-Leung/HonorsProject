@@ -17,7 +17,7 @@ html, body {
 .guess-button-container {
   display: flex;
   width: 60%;
-  height: 35%;
+  height: 80%;
   flex-wrap: wrap;
 }
 
